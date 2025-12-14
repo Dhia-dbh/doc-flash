@@ -1,0 +1,1 @@
+"""DocFlash FastAPI service."""
