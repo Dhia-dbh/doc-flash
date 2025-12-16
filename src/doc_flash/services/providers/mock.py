@@ -1,6 +1,10 @@
 """Fallback provider that avoids external calls."""
 
-from doc_flash.services.prompts import build_documentation_prompt, build_markdown_prompt
+from doc_flash.services.prompts import (
+    build_documentation_prompt,
+    build_markdown_prompt,
+    build_tests_prompt,
+)
 from doc_flash.services.providers.base import LLMProvider
 
 
@@ -14,3 +18,7 @@ class MockProvider(LLMProvider):
     async def describe_behaviour(self, code: str) -> str:
         prompt = build_markdown_prompt(code)
         return "## Mocked summary\n" + prompt
+
+    async def generate_tests(self, code: str) -> str:
+        prompt = build_tests_prompt(code)
+        return "# Mocked tests\n" + prompt

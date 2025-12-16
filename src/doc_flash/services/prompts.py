@@ -24,3 +24,15 @@ def build_markdown_prompt(code: str) -> str:
         "Code to analyse:\n"
         f"{code}"
     )
+
+
+def build_tests_prompt(code: str) -> str:
+    """Ask the model to suggest unit tests for the code."""
+    return (
+        "You are helping a developer add test coverage. "
+        "Produce a set of unit tests for the code snippet below using pytest style. "
+        "Focus on behaviour and edge cases, avoid over-mocking, and keep fixtures minimal. "
+        "Return only the test code inside a single Python file.\n\n"
+        "Code to test:\n"
+        f"{code}"
+    )

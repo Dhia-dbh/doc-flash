@@ -13,3 +13,7 @@ class LLMProvider(ABC):
     @abstractmethod
     async def describe_behaviour(self, code: str) -> str:
         """Return a markdown summary of the code's behaviour."""
+
+    @abstractmethod
+    async def generate_tests(self, code: str) -> str:
+        """Return a set of unit tests for the provided code."""

@@ -14,3 +14,6 @@ class DocumentationService:
 
     async def generate_markdown(self, code: str) -> str:
         return await self.provider.describe_behaviour(code)
+
+    async def generate_tests(self, code: str) -> str:
+        return await self.provider.generate_tests(code)

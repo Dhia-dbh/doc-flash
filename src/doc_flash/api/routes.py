@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import PlainTextResponse
 
 from doc_flash.api.dependencies import get_documentation_service
-from doc_flash.api.schemas import CodePayload, DocumentedCodeResponse
+from doc_flash.api.schemas import CodePayload, DocumentedCodeResponse, GeneratedTestsResponse
 from doc_flash.services.documentation_service import DocumentationService
 
 router = APIRouter(prefix="/v1", tags=["documentation"])
@@ -31,5 +31,15 @@ async def generate_markdown(
     return PlainTextResponse(
         content=markdown,
         media_type="text/markdown",
-        headers={"Content-Disposition": f'attachment; filename=\"{filename}\"'},
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
     )
+
+
+@router.post("/tests", response_model=GeneratedTestsResponse)
+async def generate_tests(
+    payload: CodePayload,
+    service: DocumentationService = Depends(get_documentation_service),
+) -> GeneratedTestsResponse:
+    """Generate pytest-style unit tests for the provided code."""
+    tests = await service.generate_tests(payload.code)
+    return GeneratedTestsResponse(tests_code=tests)

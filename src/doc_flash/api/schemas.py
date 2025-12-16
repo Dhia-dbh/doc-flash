@@ -13,3 +13,7 @@ class CodePayload(BaseModel):
 
 class DocumentedCodeResponse(BaseModel):
     documented_code: str
+
+
+class GeneratedTestsResponse(BaseModel):
+    tests_code: str

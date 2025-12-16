@@ -5,7 +5,11 @@ from __future__ import annotations
 import google.generativeai as genai
 from fastapi.concurrency import run_in_threadpool
 
-from doc_flash.services.prompts import build_documentation_prompt, build_markdown_prompt
+from doc_flash.services.prompts import (
+    build_documentation_prompt,
+    build_markdown_prompt,
+    build_tests_prompt,
+)
 from doc_flash.services.providers.base import LLMProvider
 
 
@@ -37,4 +41,8 @@ class GeminiProvider(LLMProvider):
 
     async def describe_behaviour(self, code: str) -> str:
         prompt = build_markdown_prompt(code)
+        return await self._generate(prompt)
+
+    async def generate_tests(self, code: str) -> str:
+        prompt = build_tests_prompt(code)
         return await self._generate(prompt)
